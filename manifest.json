@@ -1,0 +1,21 @@
+{
+  "name": "Calendar Ortodox 2026",
+  "short_name": "Calendar",
+  "description": "Calendar creștin ortodox cu sfinții zilei și rânduieli de post.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f3e8",
+  "theme_color": "#8b0000",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
