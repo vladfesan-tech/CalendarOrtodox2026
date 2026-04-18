@@ -3,140 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar Ortodox 2026</title>
+    <title>Calendar Ortodox</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f7f3e8; /* Culoare de fundal caldă, asemănătoare pergamentului */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .calendar-app {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            max-width: 450px;
-            width: 100%;
-            padding: 30px;
-            text-align: center;
-            border-top: 5px solid #8b0000; /* Roșu închis, specific bisericesc */
-        }
-        h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        .year-subtitle {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        .date-display {
-            font-size: 22px;
-            font-weight: bold;
-            color: #8b0000;
-            margin-bottom: 15px;
-        }
-        .saints-display {
-            font-size: 16px;
-            color: #444;
-            min-height: 60px;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        .rule-display {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f7f3e8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .calendar-app { background-color: #ffffff; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); max-width: 450px; width: 100%; padding: 30px; text-align: center; border-top: 5px solid #8b0000; }
+        h1 { color: #333; font-size: 24px; margin-bottom: 5px; }
+        .year-subtitle { color: #777; font-size: 14px; margin-bottom: 20px; }
+        .date-display { font-size: 22px; font-weight: bold; color: #8b0000; margin-bottom: 15px; }
+        .saints-display { font-size: 16px; color: #444; min-height: 60px; margin-bottom: 20px; line-height: 1.5; }
+        .rule-display { display: inline-block; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-bottom: 25px; }
         
-        /* Culori pentru regulile de post */
-        .rule-post { background-color: #ffe6e6; color: #cc0000; border: 1px solid #ffcccc; }
-        .rule-peste { background-color: #e6f2ff; color: #0055cc; border: 1px solid #cce0ff; }
-        .rule-ulei { background-color: #fff0e6; color: #d2691e; border: 1px solid #ffe0cc; }
-        .rule-harti { background-color: #e6ffe6; color: #008000; border: 1px solid #ccffcc; }
+        .rule-sarbatoare { background-color: #ffe6e6; color: #cc0000; border: 1px solid #ffcccc; }
         .rule-default { background-color: #f0f0f0; color: #555; border: 1px solid #ddd; }
+        .rule-loading { background-color: #e6f2ff; color: #0055cc; border: 1px solid #cce0ff; }
 
-        button {
-            background-color: #8b0000;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #660000;
-        }
-        
-        hr {
-            border: 0;
-            height: 1px;
-            background-color: #eee;
-            margin: 30px 0;
-        }
-        
-        .search-section h3 {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        select, input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-            flex: 1;
-        }
+        button { background-color: #8b0000; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; cursor: pointer; transition: 0.3s; width: 100%; }
+        button:hover { background-color: #660000; }
+        hr { border: 0; height: 1px; background-color: #eee; margin: 30px 0; }
+        .search-section h3 { font-size: 16px; margin-bottom: 15px; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        select, input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; flex: 1; }
     </style>
 </head>
 <body>
 
 <div class="calendar-app">
     <h1>Calendar Ortodox</h1>
-    <div class="year-subtitle">Anul 2026</div>
+    <div class="year-subtitle" id="anAfisat">Anul 2026</div>
     
-    <div id="currentDateDisplay" class="date-display">Încărcare...</div>
-    <div id="saintsDisplay" class="saints-display">Sfinții zilei...</div>
-    <div id="ruleDisplay" class="rule-display rule-default">Regulă de post</div>
+    <div id="currentDateDisplay" class="date-display">Încărcare date de pe server...</div>
+    <div id="saintsDisplay" class="saints-display">Te rugăm să aștepți...</div>
+    <div id="ruleDisplay" class="rule-display rule-loading">⏳ Se descarcă calendarul...</div>
     
     <button onclick="goToNextDay()">▶ Ziua Următoare</button>
-
     <hr>
-
+    
     <div class="search-section">
-        <h3>Sari la o anumită dată (2026):</h3>
+        <h3>Sari la o anumită dată:</h3>
         <div class="input-group">
-            <input type="number" id="dayInput" placeholder="Ziua (1-31)" min="1" max="31">
+            <input type="number" id="dayInput" placeholder="Ziua" min="1" max="31">
             <select id="monthInput">
-                <option value="0">Ianuarie</option>
-                <option value="1">Februarie</option>
-                <option value="2">Martie</option>
-                <option value="3">Aprilie</option>
-                <option value="4">Mai</option>
-                <option value="5">Iunie</option>
-                <option value="6">Iulie</option>
-                <option value="7">August</option>
-                <option value="8">Septembrie</option>
-                <option value="9">Octombrie</option>
-                <option value="10">Noiembrie</option>
-                <option value="11">Decembrie</option>
+                <option value="1">Ianuarie</option> <option value="2">Februarie</option> <option value="3">Martie</option>
+                <option value="4">Aprilie</option> <option value="5">Mai</option> <option value="6">Iunie</option>
+                <option value="7">Iulie</option> <option value="8">August</option> <option value="9">Septembrie</option>
+                <option value="10">Octombrie</option> <option value="11">Noiembrie</option> <option value="12">Decembrie</option>
             </select>
         </div>
         <button onclick="jumpToDate()">Caută Ziua</button>
@@ -144,129 +54,112 @@
 </div>
 
 <script>
-    // BAZA DE DATE (Exemplu pentru prima săptămână din anul 2026)
-    // Poți adăuga restul zilelor folosind formatul: "Lună-Zi": { saints: "Numele Sfinților", rule: "tip_regula" }
-    // Tipurile de reguli pot fi: "post", "peste", "ulei", "harti", "default" (zi obișnuită)
-    
-    const calendarData = {
-        "0-1": { saints: "(+) Tăierea împrejur cea după trup a Domnului; Sf. Ier. Vasile cel Mare", rule: "harti" },
-        "0-2": { saints: "Înainte-prăznuirea Botezului Domnului; Sf. Ier. Silvestru, episcopul Romei", rule: "post" },
-        "0-3": { saints: "Sf. Proroc Maleahi; Sf. Mc. Gordie", rule: "ulei" },
-        "0-4": { saints: "Soborul Sf. 70 de Apostoli; Sf. Cuv. Teoctist", rule: "default" },
-        "0-5": { saints: "Ajunul Botezului Domnului", rule: "post" },
-        "0-6": { saints: "(+) Botezul Domnului (Boboteaza)", rule: "harti" },
-        "0-7": { saints: "(+) Soborul Sf. Proroc Ioan Botezătorul", rule: "peste" }
-        // Adaugă restul anului aici, de exemplu: "0-8": { ... }, "1-1": { ... pentru 1 Februarie }
-    };
+    // Setăm datele principale
+    const anCurent = 2026; 
+    let currentDate = new Date(anCurent, 0, 1);
+    let calendarExtern = null; // Aici vom salva datele descărcate
 
-    const monthNames = [
-        "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie",
-        "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"
-    ];
-
+    const monthNames = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
     const daysOfWeek = ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"];
 
-    // Setăm data inițială la 1 Ianuarie 2026
-    let currentDate = new Date(2026, 0, 1);
-
-    function updateDisplay() {
-        const day = currentDate.getDate();
-        const month = currentDate.getMonth();
-        const dayOfWeekIndex = currentDate.getDay();
-        
-        const dateKey = `${month}-${day}`;
-        
-        // Afișăm Data
-        document.getElementById("currentDateDisplay").innerText = 
-            `${daysOfWeek[dayOfWeekIndex]}, ${day} ${monthNames[month]}`;
-
-        // Căutăm datele în dicționar
-        const dayData = calendarData[dateKey];
-        
-        const saintsElement = document.getElementById("saintsDisplay");
-        const ruleElement = document.getElementById("ruleDisplay");
-
-        if (dayData) {
-            saintsElement.innerText = dayData.saints;
-            setRuleDisplay(ruleElement, dayData.rule);
-        } else {
-            saintsElement.innerText = "Sfinții pentru această dată nu au fost introduși în baza de date.";
+    // 1. FUNCȚIA CARE PREIA DATELE DE PE SITE-UL EXTERN
+    async function preiaDateleDePeServer() {
+        try {
+            // Cerem datele de la API-ul public (Atenție: anul trebuie să fie disponibil pe serverul lor)
+            const response = await fetch(`https://azisespala.ro/data/holidays-${anCurent}.json`);
             
-            // Calculăm o regulă de bază (miercuri și vineri post) dacă nu avem date explicite
-            if (dayOfWeekIndex === 3 || dayOfWeekIndex === 5) {
-                setRuleDisplay(ruleElement, "post");
-            } else {
-                setRuleDisplay(ruleElement, "default");
+            if (!response.ok) {
+                throw new Error("Datele pentru acest an nu sunt încă disponibile pe serverul extern.");
+            }
+            
+            // Transformăm răspunsul în format JSON
+            calendarExtern = await response.json();
+            
+            // După ce am descărcat cu succes, actualizăm afișajul
+            updateDisplay();
+
+        } catch (eroare) {
+            document.getElementById("currentDateDisplay").innerText = "Eroare de conexiune";
+            document.getElementById("saintsDisplay").innerText = "Nu am putut prelua datele de pe server. Mesaj eroare: " + eroare.message;
+            document.getElementById("ruleDisplay").className = "rule-display rule-default";
+            document.getElementById("ruleDisplay").innerText = "⚠ Lipsă date externe";
+        }
+    }
+
+    // 2. FUNCȚIA CARE AFIȘEAZĂ ZIUA CURENTĂ
+    function updateDisplay() {
+        if (!calendarExtern) return; // Dacă nu s-au descărcat datele, nu facem nimic
+
+        const d = currentDate.getDate();
+        const m = currentDate.getMonth(); // în JS lunile sunt 0-11
+        const dow = currentDate.getDay();
+        
+        // Afișăm data frumos
+        document.getElementById("currentDateDisplay").innerText = `${daysOfWeek[dow]}, ${d} ${monthNames[m]}`;
+        
+        // Căutăm ziua în datele preluate. Structura lor este: calendarExtern["luna_1_la_12"][index_zi]
+        const lunaAPI = (m + 1).toString();
+        const ziuaCautata = d.toString();
+        
+        let sfintiText = "Sfinții nu au fost găsiți.";
+        let esteSarbatoare = false;
+
+        // Căutăm prin lista de zile a lunii respective
+        if (calendarExtern[lunaAPI]) {
+            const dateleZilei = calendarExtern[lunaAPI].find(item => item.date === ziuaCautata);
+            
+            if (dateleZilei) {
+                sfintiText = dateleZilei.text;
+                esteSarbatoare = dateleZilei.isHoliday; // API-ul ne spune dacă e cu cruce roșie (true/false)
             }
         }
-    }
 
-    function setRuleDisplay(element, ruleType) {
-        // Resetăm clasele
-        element.className = "rule-display";
-        
-        switch(ruleType) {
-            case "post":
-                element.classList.add("rule-post");
-                element.innerText = "🛑 Zi de Post";
-                break;
-            case "peste":
-                element.classList.add("rule-peste");
-                element.innerText = "🐟 Dezlegare la pește";
-                break;
-            case "ulei":
-                element.classList.add("rule-ulei");
-                element.innerText = "🍷 Dezlegare la ulei și vin";
-                break;
-            case "harti":
-                element.classList.add("rule-harti");
-                element.innerText = "🟢 Harți (Fără post)";
-                break;
-            default:
-                element.classList.add("rule-default");
-                element.innerText = "⚪ Zi obișnuită";
+        // Punem textul pe ecran
+        document.getElementById("saintsDisplay").innerText = sfintiText;
+
+        // Setăm regulile (postul îl calculăm noi din nou pentru Miercuri și Vineri, plus ce zice API-ul)
+        const elRegula = document.getElementById("ruleDisplay");
+        elRegula.className = "rule-display";
+
+        if (esteSarbatoare) {
+            elRegula.classList.add("rule-sarbatoare");
+            elRegula.innerText = "✝ Sărbătoare (Cruce Roșie)";
+        } else if (dow === 3 || dow === 5) {
+            elRegula.classList.add("rule-default"); // Poți pune culoare de post aici dacă vrei
+            elRegula.innerText = "🛑 Zi de Post (Miercuri/Vineri)";
+        } else {
+            elRegula.classList.add("rule-default");
+            elRegula.innerText = "⚪ Zi obișnuită";
         }
     }
 
+    // 3. FUNCȚIILE DE BUTOANE
     function goToNextDay() {
-        // Adăugăm o zi la data curentă
         currentDate.setDate(currentDate.getDate() + 1);
-        
-        // Dacă din greșeală trecem în 2027, ne oprim la 31 dec 2026
-        if (currentDate.getFullYear() > 2026) {
-            currentDate = new Date(2026, 11, 31);
-            alert("Ai ajuns la sfârșitul anului 2026.");
+        if (currentDate.getFullYear() > anCurent) {
+            currentDate = new Date(anCurent, 11, 31);
+            alert("Ai ajuns la sfârșitul anului!");
+            return;
         }
-        
         updateDisplay();
     }
 
     function jumpToDate() {
-        const inputDay = parseInt(document.getElementById("dayInput").value);
-        const inputMonth = parseInt(document.getElementById("monthInput").value);
-
-        if (!inputDay || inputDay < 1 || inputDay > 31) {
-            alert("Te rog să introduci o zi validă (1-31).");
-            return;
-        }
-
-        // Creăm o nouă dată pentru a verifica validitatea (ex: să nu existe 30 Februarie)
-        const testDate = new Date(2026, inputMonth, inputDay);
+        const d = parseInt(document.getElementById("dayInput").value);
+        const m = parseInt(document.getElementById("monthInput").value) - 1; // scădem 1 pentru indexul de JS
+        if (!d || d < 1 || d > 31) return alert("Zi invalidă!");
         
-        // Dacă luna testată e diferită de luna introdusă, înseamnă că data nu e validă (javascript face overflow automat)
-        if (testDate.getMonth() !== inputMonth) {
-            alert("Data introdusă nu există în această lună.");
-            return;
-        }
-
+        const testDate = new Date(anCurent, m, d);
+        if (testDate.getMonth() !== m) return alert("Data nu există în calendar!");
+        
         currentDate = testDate;
         updateDisplay();
     }
 
-    // Inițializăm afișajul la încărcarea paginii
-    window.onload = updateDisplay;
+    // 4. PORNIM APLICAȚIA
+    // Când se încarcă pagina, apelăm automat site-ul extern
+    window.onload = preiaDateleDePeServer;
 
 </script>
-
 </body>
 </html>
