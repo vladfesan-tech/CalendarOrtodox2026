@@ -57,9 +57,9 @@
 </div>
 
 <script>
-    // Setăm datele principale
-    const anCurent = 2026; 
-    let currentDate = new Date(anCurent, 0, 1);
+   // Setăm datele principale dinamic
+    let currentDate = new Date(); // Preia automat ziua, luna și anul de pe dispozitivul tău
+    const anCurent = currentDate.getFullYear(); // Extrage anul curent pentru a descărca baza de date corectă
     let calendarExtern = null; // Aici vom salva datele descărcate
 
     const monthNames = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
@@ -99,6 +99,9 @@
         
         // Afișăm data frumos
         document.getElementById("currentDateDisplay").innerText = `${daysOfWeek[dow]}, ${d} ${monthNames[m]}`;
+
+        // Actualizăm automat și anul afișat sus
+        document.getElementById("anAfisat").innerText = "Anul " + currentDate.getFullYear();
         
         // Căutăm ziua în datele preluate. Structura lor este: calendarExtern["luna_1_la_12"][index_zi]
         const lunaAPI = (m + 1).toString();
