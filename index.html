@@ -164,5 +164,18 @@
     window.onload = preiaDateleDePeServer;
 
 </script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then((registration) => {
+                    console.log('PWA Service Worker înregistrat cu succes: ', registration.scope);
+                })
+                .catch((error) => {
+                    console.log('Înregistrarea Service Worker a eșuat: ', error);
+                });
+        });
+    }
+</script>
 </body>
 </html>
