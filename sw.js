@@ -1,4 +1,4 @@
-const CACHE_NAME = 'calendar-ortodox-v2';
+const CACHE_NAME = 'calendar-ortodox-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
